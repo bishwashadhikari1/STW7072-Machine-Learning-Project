@@ -1,0 +1,71 @@
+,feature,importance,category
+1,o3_prev_month_mean,0.2754467981670577,Lagged
+58,hr_cv_prev_week_std,0.0877326609900078,Heart Rate
+59,hr_cv_prev_24h_max,0.04401526796700543,Heart Rate
+60,hr_range_prev_week_mean,0.02321215358470117,Heart Rate
+16,hr_mean_trend_24h,0.022511542073792114,Heart Rate
+54,stress_std_prev_month_mean,0.017700588114432713,Stress
+69,hr_cv_prev_6h,0.01692202509506493,Heart Rate
+18,aqi_pm25_prev_24h_min,0.014164360796215747,Air Quality
+48,hr_mean_prev_24h_min,0.012452406193737465,Heart Rate
+51,o3_prev_12h,0.011769912491664614,Lagged
+13,spo2_mean_prev_month_mean,0.011125697796499811,Blood Oxygen
+67,hr_mean_prev_6h,0.010987092366399165,Heart Rate
+5,o3_prev_24h_min,0.009974837160702976,Lagged
+10,o3_prev_week_mean,0.009290615965263548,Lagged
+19,o3_prev_24h_mean,0.009113378393594518,Lagged
+34,aqi_pm25_prev_24h_std,0.007921568476988439,Air Quality
+15,aqi_pm25_prev_24h_mean,0.007884857191714546,Air Quality
+8,aqi_pm25_prev_24h_max,0.006939816131824861,Air Quality
+47,aqi_pm25_prev_12h,0.00568152439600651,Air Quality
+28,hr_std_trend_24h,0.005483934698985759,Heart Rate
+7,pm25_prev_month_mean,0.004940440323933215,Air Quality
+4,aqi_pm25_prev_month_mean,0.004702739071461526,Air Quality
+46,aqi_pm25_prev_6h,0.004607326914867737,Air Quality
+22,day_of_week,0.003395079892210351,Temporal
+21,pm25_prev_24h_mean,0.003345855202824777,Air Quality
+42,o3_prev_24h_max,0.002594386697435147,Lagged
+57,pm25_prev_12h,0.002449656527561661,Air Quality
+14,cumulative_stress_week,0.002272384493090529,Stress
+53,spo2_min_prev_week_mean,0.0020687128193115356,Blood Oxygen
+68,o3_prev_6h,0.0015007199349461153,Lagged
+65,pm25_prev_6h,0.001227826959236844,Air Quality
+6,hr_mean_prev_24h_max,0.0011648527940061105,Heart Rate
+38,hr_std_prev_24h_max,0.0009977522563827889,Heart Rate
+45,hr_cv_trend_24h,0.00047311661917774915,Heart Rate
+12,pm25_prev_24h_max,0.0004434692923031669,Air Quality
+36,hr_range_prev_24h_std,0.0002898972623234464,Heart Rate
+55,hr_cv_prev_24h_min,0.00012243290039741782,Heart Rate
+52,hr_range_prev_24h_min,0.00010253172063234839,Heart Rate
+61,o3_prev_3h,2.4995188990795114e-05,Lagged
+56,hr_cv_prev_week_mean,0.0,Heart Rate
+39,hr_mean_prev_24h_std,0.0,Heart Rate
+43,pm25_prev_24h_std,0.0,Air Quality
+44,aqi_pm25_prev_week_std,0.0,Air Quality
+23,pm25_prev_week_mean,0.0,Air Quality
+66,hr_mean_prev_3h,0.0,Heart Rate
+2,hr_mean_prev_month_mean,0.0,Heart Rate
+49,hr_std_prev_24h_min,0.0,Heart Rate
+25,hr_mean_prev_week_mean,0.0,Heart Rate
+64,stress_std_prev_24h_max,-1.688477706247582e-05,Stress
+40,pm25_prev_24h_min,-0.0007996041178372382,Air Quality
+30,hr_range_prev_24h_mean,-0.0008280856480162635,Heart Rate
+35,aqi_pm25_prev_week_mean,-0.0010387929402265073,Air Quality
+63,hr_cv_prev_month_mean,-0.0011398409395418918,Heart Rate
+17,spo2_min_prev_month_mean,-0.001869862468714012,Blood Oxygen
+33,hr_range_prev_month_mean,-0.002163662834485236,Heart Rate
+3,o3_prev_24h_std,-0.0033163909483287625,Lagged
+24,hr_range_trend_24h,-0.0036973137720908377,Heart Rate
+50,hr_cv_prev_24h_mean,-0.005407287308730813,Heart Rate
+32,hr_range_prev_24h_max,-0.0059897462694969315,Heart Rate
+20,hr_mean_prev_24h_mean,-0.006255511935808223,Heart Rate
+27,hr_mean_prev_week_std,-0.0074274022031677765,Heart Rate
+37,spo2_mean_prev_week_mean,-0.008004807823278438,Blood Oxygen
+11,hr_std_prev_24h_mean,-0.008299019929337459,Heart Rate
+62,hr_std_prev_24h_std,-0.008695675802296776,Heart Rate
+41,pm25_prev_week_std,-0.009818352934679364,Air Quality
+31,hr_std_prev_week_std,-0.01506912814644117,Heart Rate
+26,hr_range_prev_week_std,-0.016615624961997442,Heart Rate
+29,hr_std_prev_week_mean,-0.027315444301120605,Heart Rate
+9,hr_std_prev_month_mean,-0.0366319118885434,Heart Rate
+0,o3_prev_week_std,-0.04420752144936668,Lagged

@@ -1,0 +1,4 @@
+1. We first use hourly_health_pipeline.py to merge all the json health data and csv of air quality data.
+2. We use sleep_pattern_analysis for cleaning data and then thoroughly analyze, select features and save the best model after training.
+3. The prediction_api is used as backend that serves routes to our saved best model to use during demonstration of the project.
+4. Project demonstration is done from index.html

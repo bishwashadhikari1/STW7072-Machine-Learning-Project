@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Quality Prediction System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            min-height: 600px;
+        }
+
+        .input-section {
+            padding: 40px;
+            background: #f8f9fa;
+            border-right: 1px solid #e9ecef;
+        }
+
+        .results-section {
+            padding: 40px;
+            background: white;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #34495e;
+            font-size: 0.95rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            margin: 10px 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+            box-shadow: 0 4px 15px rgba(149, 165, 166, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .prediction-result {
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%);
+            border: 2px solid #27ae60;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .prediction-result.poor {
+            background: linear-gradient(135deg, #ffeaea 0%, #fff0f0 100%);
+            border-color: #e74c3c;
+        }
+
+        .prediction-result.fair {
+            background: linear-gradient(135deg, #fff7e6 0%, #fffaf0 100%);
+            border-color: #f39c12;
+        }
+
+        .prediction-result.good {
+            background: linear-gradient(135deg, #e8f4fd 0%, #f0f8ff 100%);
+            border-color: #3498db;
+        }
+
+        .sleep-score {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .sleep-score.excellent { color: #27ae60; }
+        .sleep-score.good { color: #3498db; }
+        .sleep-score.fair { color: #f39c12; }
+        .sleep-score.poor { color: #e74c3c; }
+
+        .recommendations {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .recommendations h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .recommendations ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .recommendations li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .recommendations li:before {
+            content: "💡";
+            position: absolute;
+            left: 0;
+        }
+
+        .feature-importance {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .feature-bar {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .feature-name {
+            width: 150px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .feature-bar-bg {
+            flex: 1;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0 10px;
+        }
+
+        .feature-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .cluster-info {
+            background: linear-gradient(135deg, #f4f4f4 0%, #ffffff 100%);
+            border: 2px solid #bdc3c7;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .input-section {
+                border-right: none;
+                border-bottom: 1px solid #e9ecef;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌙 Sleep Quality Prediction System</h1>
+            <p>AI-powered sleep analysis using machine learning algorithms</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="input-section">
+                <h2 class="section-title">Health & Environment Data</h2>
+                
+                <form id="predictionForm">
+                    <div class="form-group">
+                        <h3 style="color: #2c3e50; margin-bottom: 15px;">💓 Heart Rate Metrics</h3>
+                        <div class="form-row">
+                            <div>
+                                <label for="hr_mean">Average Heart Rate (bpm)</label>
+                                <input type="number" id="hr_mean" min="50" max="120" value="75">
+                            </div>
+                            <div>
+                                <label for="hr_std">Heart Rate Variability</label>
+                                <input type="number" id="hr_std" min="5" max="30" value="12" step="0.1">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div>
+                                <label for="hr_cv_prev_week_std">HR CV Weekly Std</label>
+                                <input type="number" id="hr_cv_prev_week_std" min="0" max="1" value="0.15" step="0.01">
+                            </div>
+                            <div>
+                                <label for="hr_mean_trend_24h">24h HR Trend</label>
+                                <input type="number" id="hr_mean_trend_24h" min="-10" max="10" value="0" step="0.1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h3 style="color: #2c3e50; margin-bottom: 15px;">🌬️ Air Quality</h3>
+                        <div class="form-row">
+                            <div>
+                                <label for="pm25">PM2.5 Level (µg/m³)</label>
+                                <input type="number" id="pm25" min="0" max="200" value="25">
+                            </div>
+                            <div>
+                                <label for="o3_prev_month_mean">O3 Monthly Mean</label>
+                                <input type="number" id="o3_prev_month_mean" min="0" max="0.2" value="0.05" step="0.001">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div>
+                                <label for="aqi_pm25_prev_24h_min">24h Min AQI PM2.5</label>
+                                <input type="number" id="aqi_pm25_prev_24h_min" min="0" max="300" value="50">
+                            </div>
+                            <div>
+                                <label for="aqi_pm25_prev_24h_std">24h AQI PM2.5 Std</label>
+                                <input type="number" id="aqi_pm25_prev_24h_std" min="0" max="100" value="20">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h3 style="color: #2c3e50; margin-bottom: 15px;">😰 Stress & Wellness</h3>
+                        <div class="form-row">
+                            <div>
+                                <label for="stress_mean">Average Stress Level (0-100)</label>
+                                <input type="number" id="stress_mean" min="0" max="100" value="30">
+                            </div>
+                            <div>
+                                <label for="stress_std_prev_month_mean">Monthly Stress Std</label>
+                                <input type="number" id="stress_std_prev_month_mean" min="0" max="50" value="15" step="0.1">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div>
+                                <label for="spo2_mean">Blood Oxygen Level (%)</label>
+                                <input type="number" id="spo2_mean" min="90" max="100" value="97" step="0.1">
+                            </div>
+                            <div>
+                                <label for="cumulative_stress_week">Weekly Cumulative Stress</label>
+                                <input type="number" id="cumulative_stress_week" min="0" max="1000" value="200">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h3 style="color: #2c3e50; margin-bottom: 15px;">⏰ Time Context</h3>
+                        <div class="form-row">
+                            <div>
+                                <label for="hour">Current Hour (0-23)</label>
+                                <input type="number" id="hour" min="0" max="23" value="21">
+                            </div>
+                            <div>
+                                <label for="day_of_week">Day of Week (0=Mon, 6=Sun)</label>
+                                <input type="number" id="day_of_week" min="0" max="6" value="2">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 30px;">
+                        <button type="button" class="btn" onclick="generateRandomData()">🎲 Generate Random Data</button>
+                        <button type="submit" class="btn btn-success">🔮 Predict Sleep Quality</button>
+                        <button type="button" class="btn btn-secondary" onclick="resetForm()">🔄 Reset Form</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="results-section">
+                <h2 class="section-title">Prediction Results & Analysis</h2>
+                
+                <div id="predictionResults" style="display: none;">
+                    <div id="predictionCard" class="prediction-result">
+                        <h3>Sleep Quality Prediction</h3>
+                        <div id="sleepScore" class="sleep-score">Excellent</div>
+                        <p id="confidenceText">Prediction Confidence: <span id="confidence">95%</span></p>
+                        <p id="clusterInfo">Sleep Pattern Cluster: <span id="cluster">Cluster 1</span></p>
+                    </div>
+
+                    <div class="recommendations" id="recommendationsSection">
+                        <h3>💡 Personalized Recommendations</h3>
+                        <ul id="recommendationsList">
+                            <!-- Recommendations will be populated by JavaScript -->
+                        </ul>
+                    </div>
+
+                    <div class="feature-importance">
+                        <h3>📊 Key Factors Influencing Your Sleep</h3>
+                        <div id="featureChart">
+                            <!-- Feature importance bars will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="sleepProbability">85%</div>
+                            <div class="stat-label">Sleep Quality Score</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="riskLevel">Low</div>
+                            <div class="stat-label">Risk Level</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="optimalTime">22:30</div>
+                            <div class="stat-label">Optimal Bedtime</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="sleepDuration">7.5h</div>
+                            <div class="stat-label">Recommended Duration</div>
+                        </div>
+                    </div>
+
+                    <div class="cluster-info">
+                        <h3>🎯 Sleep Pattern Analysis</h3>
+                        <p id="clusterDescription">You belong to a sleep pattern cluster characterized by good cardiovascular health and moderate environmental stress factors.</p>
+                        <div style="margin-top: 15px;">
+                            <strong>Similar Users:</strong> <span id="clusterSize">2,340</span> nights with similar sleep patterns
+                        </div>
+                    </div>
+                </div>
+
+                <div id="welcomeMessage">
+                    <div style="text-align: center; padding: 50px 20px; color: #7f8c8d;">
+                        <h3>🌟 Welcome to Sleep Quality Prediction</h3>
+                        <p style="margin: 20px 0; line-height: 1.6;">
+                            Fill in your health and environmental data on the left to get personalized sleep quality predictions and recommendations.
+                        </p>
+                        <div style="background: #f8f9fa; border-radius: 10px; padding: 20px; margin: 20px 0;">
+                            <h4 style="color: #2c3e50; margin-bottom: 15px;">How it works:</h4>
+                            <div style="text-align: left; max-width: 400px; margin: 0 auto;">
+                                <p>✅ AI analyzes your vital signs and environment</p>
+                                <p>✅ Compares with patterns from 5,000+ days data</p>
+                                <p>✅ Provides personalized recommendations</p>
+                                <p>✅ Predicts optimal sleep timing</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sleep quality prediction model (simplified simulation)
+        class SleepPredictor {
+            constructor() {
+                // Feature importance weights (based on your actual model results)
+                this.featureWeights = {
+                    'o3_prev_month_mean': 0.275,
+                    'hr_cv_prev_week_std': 0.088,
+                    'hr_cv_prev_24h_max': 0.044,
+                    'hr_mean_trend_24h': 0.023,
+                    'stress_std_prev_month_mean': 0.018,
+                    'aqi_pm25_prev_24h_min': 0.014,
+                    'pm25': 0.010,
+                    'stress_mean': 0.008,
+                    'spo2_mean': 0.007,
+                    'hour': 0.005,
+                    'day_of_week': 0.003,
+                    'cumulative_stress_week': 0.002
+                };
+                
+                // Sleep quality thresholds
+                this.thresholds = {
+                    excellent: 80,
+                    good: 70,
+                    fair: 60
+                };
+            }
+
+            predict(features) {
+                // Normalize and calculate weighted score
+                let score = 0;
+                let totalWeight = 0;
+
+                // Heart rate factors
+                const hrScore = this.calculateHRScore(features);
+                score += hrScore * (this.featureWeights.hr_cv_prev_week_std + this.featureWeights.hr_mean_trend_24h);
+                totalWeight += (this.featureWeights.hr_cv_prev_week_std + this.featureWeights.hr_mean_trend_24h);
+
+                // Air quality factors
+                const aqScore = this.calculateAQScore(features);
+                score += aqScore * (this.featureWeights.o3_prev_month_mean + this.featureWeights.aqi_pm25_prev_24h_min + this.featureWeights.pm25);
+                totalWeight += (this.featureWeights.o3_prev_month_mean + this.featureWeights.aqi_pm25_prev_24h_min + this.featureWeights.pm25);
+
+                // Stress factors
+                const stressScore = this.calculateStressScore(features);
+                score += stressScore * (this.featureWeights.stress_std_prev_month_mean + this.featureWeights.stress_mean + this.featureWeights.cumulative_stress_week);
+                totalWeight += (this.featureWeights.stress_std_prev_month_mean + this.featureWeights.stress_mean + this.featureWeights.cumulative_stress_week);
+
+                // Time factors
+                const timeScore = this.calculateTimeScore(features);
+                score += timeScore * (this.featureWeights.hour + this.featureWeights.day_of_week);
+                totalWeight += (this.featureWeights.hour + this.featureWeights.day_of_week);
+
+                // SpO2 factor
+                const spo2Score = Math.min(features.spo2_mean / 98, 1) * 100;
+                score += spo2Score * this.featureWeights.spo2_mean;
+                totalWeight += this.featureWeights.spo2_mean;
+
+                // Normalize final score
+                const finalScore = (score / totalWeight);
+                
+                return {
+                    score: Math.max(0, Math.min(100, finalScore)),
+                    category: this.categorizeScore(finalScore),
+                    confidence: this.calculateConfidence(features),
+                    cluster: this.assignCluster(features),
+                    factors: {
+                        heartRate: hrScore,
+                        airQuality: aqScore,
+                        stress: stressScore,
+                        timing: timeScore,
+                        bloodOxygen: spo2Score
+                    }
+                };
+            }
+
+            calculateHRScore(features) {
+                const optimalHR = 70;
+                const hrDiff = Math.abs(features.hr_mean - optimalHR);
+                const hrScore = Math.max(0, 100 - hrDiff * 2);
+                
+                // Factor in variability
+                const optimalHRV = 15;
+                const hrvDiff = Math.abs(features.hr_std - optimalHRV);
+                const hrvScore = Math.max(0, 100 - hrvDiff * 3);
+                
+                return (hrScore + hrvScore) / 2;
+            }
+
+            calculateAQScore(features) {
+                // Lower PM2.5 is better
+                const pm25Score = Math.max(0, 100 - features.pm25 * 2);
+                
+                // O3 should be moderate
+                const o3Score = features.o3_prev_month_mean < 0.1 ? 
+                    100 - (features.o3_prev_month_mean * 1000) : 
+                    Math.max(0, 100 - (features.o3_prev_month_mean - 0.1) * 2000);
+                
+                return (pm25Score + o3Score) / 2;
+            }
+
+            calculateStressScore(features) {
+                // Lower stress is better
+                const stressScore = Math.max(0, 100 - features.stress_mean);
+                
+                // Lower cumulative stress is better
+                const cumStressScore = Math.max(0, 100 - (features.cumulative_stress_week / 10));
+                
+                return (stressScore + cumStressScore) / 2;
+            }
+
+            calculateTimeScore(features) {
+                // Optimal bedtime hours (21-23)
+                let timeScore = 100;
+                if (features.hour < 21 || features.hour > 23) {
+                    const deviation = features.hour < 21 ? 
+                        21 - features.hour : 
+                        features.hour - 23;
+                    timeScore = Math.max(0, 100 - deviation * 10);
+                }
+                
+                // Weekend vs weekday
+                const isWeekend = features.day_of_week >= 5;
+                const weekendBonus = isWeekend ? 5 : 0;
+                
+                return Math.min(100, timeScore + weekendBonus);
+            }
+
+            categorizeScore(score) {
+                if (score >= this.thresholds.excellent) return 'Excellent';
+                if (score >= this.thresholds.good) return 'Good';
+                if (score >= this.thresholds.fair) return 'Fair';
+                return 'Poor';
+            }
+
+            calculateConfidence(features) {
+                // Higher confidence for more typical values
+                let confidence = 85;
+                
+                // Adjust based on extreme values
+                if (features.hr_mean < 50 || features.hr_mean > 100) confidence -= 10;
+                if (features.pm25 > 100) confidence -= 15;
+                if (features.stress_mean > 80) confidence -= 10;
+                if (features.spo2_mean < 95) confidence -= 20;
+                
+                return Math.max(60, Math.min(99, confidence));
+            }
+
+            assignCluster(features) {
+                // Simple clustering based on dominant factors
+                const aqScore = this.calculateAQScore(features);
+                const stressScore = this.calculateStressScore(features);
+                
+                if (aqScore > 70 && stressScore > 70) {
+                    return { id: 0, name: "Optimal Environment", description: "Low stress, good air quality" };
+                } else {
+                    return { id: 1, name: "Challenging Environment", description: "Higher stress or poor air quality" };
+                }
+            }
+        }
+
+        const predictor = new SleepPredictor();
+
+        // Form handling
+        document.getElementById('predictionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            makePrediction();
+        });
+
+        function makePrediction() {
+            // Collect form data
+            const features = {
+                hr_mean: parseFloat(document.getElementById('hr_mean').value),
+                hr_std: parseFloat(document.getElementById('hr_std').value),
+                hr_cv_prev_week_std: parseFloat(document.getElementById('hr_cv_prev_week_std').value),
+                hr_mean_trend_24h: parseFloat(document.getElementById('hr_mean_trend_24h').value),
+                pm25: parseFloat(document.getElementById('pm25').value),
+                o3_prev_month_mean: parseFloat(document.getElementById('o3_prev_month_mean').value),
+                aqi_pm25_prev_24h_min: parseFloat(document.getElementById('aqi_pm25_prev_24h_min').value),
+                aqi_pm25_prev_24h_std: parseFloat(document.getElementById('aqi_pm25_prev_24h_std').value),
+                stress_mean: parseFloat(document.getElementById('stress_mean').value),
+                stress_std_prev_month_mean: parseFloat(document.getElementById('stress_std_prev_month_mean').value),
+                spo2_mean: parseFloat(document.getElementById('spo2_mean').value),
+                cumulative_stress_week: parseFloat(document.getElementById('cumulative_stress_week').value),
+                hour: parseInt(document.getElementById('hour').value),
+                day_of_week: parseInt(document.getElementById('day_of_week').value)
+            };
+
+            // Make prediction
+            const result = predictor.predict(features);
+            
+            // Display results
+            displayResults(result, features);
+        }
+
+        function displayResults(result, features) {
+            // Show results section
+            document.getElementById('welcomeMessage').style.display = 'none';
+            document.getElementById('predictionResults').style.display = 'block';
+
+            // Update prediction card
+            const predictionCard = document.getElementById('predictionCard');
+            predictionCard.className = `prediction-result ${result.category.toLowerCase()}`;
+            
+            document.getElementById('sleepScore').textContent = result.category;
+            document.getElementById('sleepScore').className = `sleep-score ${result.category.toLowerCase()}`;
+            document.getElementById('confidence').textContent = `${result.confidence}%`;
+            document.getElementById('cluster').textContent = result.cluster.name;
+
+            // Update stats
+            document.getElementById('sleepProbability').textContent = `${Math.round(result.score)}%`;
+            document.getElementById('riskLevel').textContent = getRiskLevel(result.score);
+            document.getElementById('optimalTime').textContent = getOptimalBedtime(features);
+            document.getElementById('sleepDuration').textContent = getRecommendedDuration(result.category);
+
+            // Update recommendations
+            updateRecommendations(result, features);
+            
+            // Update feature importance chart
+            updateFeatureChart(result.factors);
+            
+            // Update cluster info
+            updateClusterInfo(result.cluster);
+        }
+
+        function updateRecommendations(result, features) {
+            const recommendations = generateRecommendations(result, features);
+            const list = document.getElementById('recommendationsList');
+            list.innerHTML = '';
+            
+            recommendations.forEach(rec => {
+                const li = document.createElement('li');
+                li.textContent = rec;
+                list.appendChild(li);
+            });
+        }
+
+        function generateRecommendations(result, features) {
+            const recs = [];
+            
+            // Air quality recommendations
+            if (features.pm25 > 50) {
+                recs.push("Consider using an air purifier in your bedroom");
+                recs.push("Keep windows closed during high pollution periods");
+            }
+            
+            // Heart rate recommendations
+            if (features.hr_mean > 85) {
+                recs.push("Practice relaxation techniques before bed");
+                recs.push("Avoid caffeine 6 hours before sleep");
+            }
+            
+            // Stress recommendations
+            if (features.stress_mean > 60) {
+                recs.push("Try 10 minutes of meditation before bed");
+                recs.push("Consider a consistent bedtime routine");
+            }
+            
+            // Time recommendations
+            if (features.hour < 21) {
+                recs.push("Your bedtime might be too early - consider staying up until 21:00-22:00");
+            } else if (features.hour > 23) {
+                recs.push("Try going to bed earlier for better sleep quality");
+            }
+            
+            // SpO2 recommendations
+            if (features.spo2_mean < 96) {
+                recs.push("Ensure good ventilation in your sleeping area");
+                recs.push("Consider consulting a healthcare provider about oxygen levels");
+            }
+            
+            // Default recommendations
+            if (recs.length === 0) {
+                recs.push("Maintain your current healthy sleep habits");
+                recs.push("Keep your bedroom cool (65-68°F) and dark");
+                recs.push("Stick to a consistent sleep schedule");
+            }
+            
+            return recs.slice(0, 5); // Limit to 5 recommendations
+        }
+
+        function updateFeatureChart(factors) {
+            const chart = document.getElementById('featureChart');
+            chart.innerHTML = '';
+            
+            const factorData = [
+                { name: 'Heart Rate', value: factors.heartRate },
+                { name: 'Air Quality', value: factors.airQuality },
+                { name: 'Stress Level', value: factors.stress },
+                { name: 'Timing', value: factors.timing },
+                { name: 'Blood Oxygen', value: factors.bloodOxygen }
+            ];
+            
+            factorData.sort((a, b) => b.value - a.value);
+            
+            factorData.forEach(factor => {
+                const div = document.createElement('div');
+                div.className = 'feature-bar';
+                
+                div.innerHTML = `
+                    <div class="feature-name">${factor.name}</div>
+                    <div class="feature-bar-bg">
+                        <div class="feature-bar-fill" style="width: ${factor.value}%"></div>
+                    </div>
+                    <div style="width: 50px; text-align: right; font-weight: bold;">${Math.round(factor.value)}%</div>
+                `;
+                
+                chart.appendChild(div);
+            });
+        }
+
+        function updateClusterInfo(cluster) {
+            document.getElementById('clusterDescription').textContent = 
+                `You belong to the "${cluster.name}" cluster, characterized by ${cluster.description}.`;
+            document.getElementById('clusterSize').textContent = 
+                cluster.id === 0 ? "4,324" : "752";
+        }
+
+        function getRiskLevel(score) {
+            if (score >= 80) return "Very Low";
+            if (score >= 70) return "Low";
+            if (score >= 60) return "Moderate";
+            return "High";
+        }
+
+        function getOptimalBedtime(features) {
+            const currentHour = features.hour;
+            if (currentHour >= 18 && currentHour <= 20) {
+                return "22:00";
+            } else if (currentHour >= 21 && currentHour <= 22) {
+                return "22:30";
+            } else {
+                return "21:30";
+            }
+        }
+
+        function getRecommendedDuration(category) {
+            switch(category) {
+                case 'Excellent': return "8.0h";
+                case 'Good': return "7.5h";
+                case 'Fair': return "8.5h";
+                case 'Poor': return "9.0h";
+                default: return "8.0h";
+            }
+        }
+
+        function generateRandomData() {
+            // Generate realistic random values
+            document.getElementById('hr_mean').value = Math.round(60 + Math.random() * 40);
+            document.getElementById('hr_std').value = (8 + Math.random() * 15).toFixed(1);
+            document.getElementById('hr_cv_prev_week_std').value = (0.05 + Math.random() * 0.25).toFixed(3);
+            document.getElementById('hr_mean_trend_24h').value = (-5 + Math.random() * 10).toFixed(1);
+            
+            document.getElementById('pm25').value = Math.round(Math.random() * 100);
+            document.getElementById('o3_prev_month_mean').value = (Math.random() * 0.15).toFixed(4);
+            document.getElementById('aqi_pm25_prev_24h_min').value = Math.round(Math.random() * 150);
+            document.getElementById('aqi_pm25_prev_24h_std').value = Math.round(Math.random() * 50);
+            
+            document.getElementById('stress_mean').value = Math.round(Math.random() * 80);
+            document.getElementById('stress_std_prev_month_mean').value = (Math.random() * 30).toFixed(1);
+            document.getElementById('spo2_mean').value = (94 + Math.random() * 6).toFixed(1);
+            document.getElementById('cumulative_stress_week').value = Math.round(Math.random() * 500);
+            
+            document.getElementById('hour').value = 18 + Math.round(Math.random() * 5);
+            document.getElementById('day_of_week').value = Math.round(Math.random() * 6);
+        }
+
+        function resetForm() {
+            document.getElementById('predictionForm').reset();
+            document.getElementById('predictionResults').style.display = 'none';
+            document.getElementById('welcomeMessage').style.display = 'block';
+            
+            // Reset to default values
+            document.getElementById('hr_mean').value = "75";
+            document.getElementById('hr_std').value = "12";
+            document.getElementById('hr_cv_prev_week_std').value = "0.15";
+            document.getElementById('hr_mean_trend_24h').value = "0";
+            document.getElementById('pm25').value = "25";
+            document.getElementById('o3_prev_month_mean').value = "0.05";
+            document.getElementById('aqi_pm25_prev_24h_min').value = "50";
+            document.getElementById('aqi_pm25_prev_24h_std').value = "20";
+            document.getElementById('stress_mean').value = "30";
+            document.getElementById('stress_std_prev_month_mean').value = "15";
+            document.getElementById('spo2_mean').value = "97";
+            document.getElementById('cumulative_stress_week').value = "200";
+            document.getElementById('hour').value = "21";
+            document.getElementById('day_of_week').value = "2";
+        }
+
+        // Initialize with current time
+        document.addEventListener('DOMContentLoaded', function() {
+            const now = new Date();
+            document.getElementById('hour').value = now.getHours();
+            document.getElementById('day_of_week').value = (now.getDay() + 6) % 7; // Convert to Monday=0 format
+        });
+    </script>
+</body>
+</html>

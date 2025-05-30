@@ -1,0 +1,3 @@
+cluster,size,sleep_quality_dist,dominant_sleep_quality
+0,4324,"{'Excellent': 1610, 'Poor': 1422, 'Fair': 651, 'Good': 641}",Excellent
+1,752,"{'Excellent': 282, 'Poor': 178, 'Good': 151, 'Fair': 141}",Excellent

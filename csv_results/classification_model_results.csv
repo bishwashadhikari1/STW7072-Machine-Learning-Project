@@ -1,0 +1,66 @@
+,cv_accuracy_mean,cv_accuracy_std,test_accuracy,test_precision,test_recall,test_f1,predictions,true_labels,model
+Decision Tree,0.5677339901477833,0.03774183509237037,0.6190944881889764,0.604909949659297,0.6190944881889764,0.6051529308043124,['Excellent' 'Fair' 'Poor' ... 'Fair' 'Fair' 'Excellent'],"datetime_hour
+2022-03-29 18:15:00+00:00    Excellent
+2020-11-30 19:15:00+00:00         Fair
+2024-05-13 21:15:00+00:00         Poor
+2021-02-01 18:15:00+00:00    Excellent
+2020-12-26 18:15:00+00:00    Excellent
+                               ...    
+2020-04-30 20:15:00+00:00    Excellent
+2023-12-12 21:15:00+00:00         Fair
+2025-03-25 19:15:00+00:00         Poor
+2024-07-23 18:15:00+00:00         Good
+2024-11-04 20:15:00+00:00    Excellent
+Name: sleep_category, Length: 1016, dtype: object","DecisionTreeClassifier(max_depth=10, min_samples_split=20, random_state=42)"
+Random Forest,0.7310344827586206,0.011249445563220935,0.7716535433070866,0.8043432742786403,0.7716535433070866,0.7524591099013853,['Excellent' 'Excellent' 'Poor' ... 'Poor' 'Good' 'Excellent'],"datetime_hour
+2022-03-29 18:15:00+00:00    Excellent
+2020-11-30 19:15:00+00:00         Fair
+2024-05-13 21:15:00+00:00         Poor
+2021-02-01 18:15:00+00:00    Excellent
+2020-12-26 18:15:00+00:00    Excellent
+                               ...    
+2020-04-30 20:15:00+00:00    Excellent
+2023-12-12 21:15:00+00:00         Fair
+2025-03-25 19:15:00+00:00         Poor
+2024-07-23 18:15:00+00:00         Good
+2024-11-04 20:15:00+00:00    Excellent
+Name: sleep_category, Length: 1016, dtype: object","RandomForestClassifier(max_depth=10, random_state=42)"
+SVM,0.6344827586206897,0.010519288918257477,0.6535433070866141,0.6576280667102283,0.6535433070866141,0.6130045425264379,['Poor' 'Excellent' 'Poor' ... 'Poor' 'Poor' 'Excellent'],"datetime_hour
+2022-03-29 18:15:00+00:00    Excellent
+2020-11-30 19:15:00+00:00         Fair
+2024-05-13 21:15:00+00:00         Poor
+2021-02-01 18:15:00+00:00    Excellent
+2020-12-26 18:15:00+00:00    Excellent
+                               ...    
+2020-04-30 20:15:00+00:00    Excellent
+2023-12-12 21:15:00+00:00         Fair
+2025-03-25 19:15:00+00:00         Poor
+2024-07-23 18:15:00+00:00         Good
+2024-11-04 20:15:00+00:00    Excellent
+Name: sleep_category, Length: 1016, dtype: object","SVC(probability=True, random_state=42)"
+K-Nearest Neighbors,0.7559113300492611,0.012447565289155957,0.8041338582677166,0.8023080453120529,0.8041338582677166,0.801315080534263,['Excellent' 'Fair' 'Poor' ... 'Poor' 'Poor' 'Excellent'],"datetime_hour
+2022-03-29 18:15:00+00:00    Excellent
+2020-11-30 19:15:00+00:00         Fair
+2024-05-13 21:15:00+00:00         Poor
+2021-02-01 18:15:00+00:00    Excellent
+2020-12-26 18:15:00+00:00    Excellent
+                               ...    
+2020-04-30 20:15:00+00:00    Excellent
+2023-12-12 21:15:00+00:00         Fair
+2025-03-25 19:15:00+00:00         Poor
+2024-07-23 18:15:00+00:00         Good
+2024-11-04 20:15:00+00:00    Excellent
+Name: sleep_category, Length: 1016, dtype: object",KNeighborsClassifier(weights='distance')
+Logistic Regression,0.5246305418719212,0.01695755120990986,0.531496062992126,0.48876697035005656,0.531496062992126,0.47656208848558657,['Poor' 'Poor' 'Poor' ... 'Fair' 'Poor' 'Excellent'],"datetime_hour
+2022-03-29 18:15:00+00:00    Excellent
+2020-11-30 19:15:00+00:00         Fair
+2024-05-13 21:15:00+00:00         Poor
+2021-02-01 18:15:00+00:00    Excellent
+2020-12-26 18:15:00+00:00    Excellent
+                               ...    
+2020-04-30 20:15:00+00:00    Excellent
+2023-12-12 21:15:00+00:00         Fair
+2025-03-25 19:15:00+00:00         Poor
+2024-07-23 18:15:00+00:00         Good
+2024-11-04 20:15:00+00:00    Excellent
+Name: sleep_category, Length: 1016, dtype: object","LogisticRegression(max_iter=1000, random_state=42)"

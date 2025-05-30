@@ -1,0 +1,13 @@
+{
+  "best_model": "K-Nearest Neighbors",
+  "best_accuracy": 0.8041338582677166,
+  "best_f1": 0.801315080534263,
+  "feature_count": 45,
+  "classes": [
+    "Poor",
+    "Fair",
+    "Excellent",
+    "Good"
+  ],
+  "optimal_clusters": 2
+}

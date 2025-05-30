@@ -1,0 +1,172 @@
+Sleep quality score - Mean: 70.0
+Creating classification targets...
+Classification targets created:
+  Sleep Quality: {'Poor': 23589, 'Excellent': 11352, 'Fair': 4752, 'Good': 4752}
+  Binary Sleep: {'Poor': 28341, 'Good': 16104}
+
+Preparing feature matrix with top 45 features...
+Final dataset: 5076 samples × 45 features
+Class distribution: {'Excellent': 1892, 'Poor': 1600, 'Fair': 792, 'Good': 792}
+
+Training Classification Models...
+==================================================
+
+Training Decision Tree...
+  CV Accuracy: 0.568 ± 0.038
+  Test Accuracy: 0.619
+  Test F1-Score: 0.605
+
+Training Random Forest...
+  CV Accuracy: 0.731 ± 0.011
+  Test Accuracy: 0.772
+  Test F1-Score: 0.752
+
+Training SVM...
+  CV Accuracy: 0.634 ± 0.011
+  Test Accuracy: 0.654
+  Test F1-Score: 0.613
+
+Training K-Nearest Neighbors...
+  CV Accuracy: 0.756 ± 0.012
+  Test Accuracy: 0.804
+  Test F1-Score: 0.801
+
+Training Logistic Regression...
+  CV Accuracy: 0.525 ± 0.017
+  Test Accuracy: 0.531
+  Test F1-Score: 0.477
+
+Performing Clustering Analysis...
+========================================
+  2 clusters - Silhouette Score: 0.233
+  3 clusters - Silhouette Score: 0.140
+  4 clusters - Silhouette Score: 0.107
+  5 clusters - Silhouette Score: 0.107
+  6 clusters - Silhouette Score: 0.101
+  7 clusters - Silhouette Score: 0.096
+
+Optimal number of clusters: 2
+
+Cluster Analysis:
+  Cluster 0: 4324 samples, Dominant: Excellent
+  Cluster 1: 752 samples, Dominant: Excellent
+
+Creating visualizations...
+Created 'images/' directory
+Saving individual performance charts...
+✓ Individual performance charts saved
+Saving individual detailed analysis charts...
+✓ Individual detailed analysis charts saved
+Saving individual clustering charts...
+✓ Individual clustering charts saved
+Saving individual feature analysis charts...
+✓ Individual feature analysis charts saved
+
+================================================================================
+SLEEP QUALITY CLASSIFICATION & CLUSTERING ANALYSIS - FINAL REPORT
+================================================================================
+
+1. DATASET SUMMARY
+--------------------------------------------------
+Total hourly records: 44,445
+Evening prediction samples: 5,076
+Features used: 45
+Class distribution: {'Excellent': 1892, 'Poor': 1600, 'Fair': 792, 'Good': 792}
+
+2. CLASSIFICATION RESULTS
+--------------------------------------------------
+Model Performance Summary:
+                    cv_accuracy_mean test_accuracy   test_f1
+Decision Tree               0.567734      0.619094  0.605153
+Random Forest               0.731034      0.771654  0.752459
+SVM                         0.634483      0.653543  0.613005
+K-Nearest Neighbors         0.755911      0.804134  0.801315
+Logistic Regression         0.524631      0.531496  0.476562
+
+Best Model: K-Nearest Neighbors
+  Test Accuracy: 0.804
+  Test F1-Score: 0.801
+  Test Precision: 0.802
+  Test Recall: 0.804
+
+3. CLUSTERING ANALYSIS
+--------------------------------------------------
+Optimal clusters: 2
+Best silhouette score: 0.233
+
+Cluster Characteristics:
+  Cluster 0: 4324 samples
+    Dominant sleep quality: Excellent
+    Distribution: {'Excellent': 1610, 'Poor': 1422, 'Fair': 651, 'Good': 641}
+  Cluster 1: 752 samples
+    Dominant sleep quality: Excellent
+    Distribution: {'Excellent': 282, 'Poor': 178, 'Good': 151, 'Fair': 141}
+
+4. KEY INSIGHTS
+--------------------------------------------------
+✓ Strong classification performance (80.4% accuracy)
+• Most important feature: o3_prev_month_mean
+• Data naturally groups into 2 distinct sleep patterns
+
+5. PRACTICAL APPLICATIONS
+--------------------------------------------------
+• Sleep quality prediction for health monitoring
+• Personalized sleep improvement recommendations
+• Population health analysis and intervention planning
+• Early detection of sleep disorders
+
+6. TECHNICAL QUALITY
+--------------------------------------------------
+✓ Applied 5 different classification algorithms
+✓ Performed K-means clustering analysis
+✓ Used proper cross-validation and train/test split
+✓ Comprehensive feature selection based on importance
+✓ Multiple evaluation metrics and visualizations
+
+================================================================================
+
+Saving models and preprocessing objects...
+  Saved: saved_models/sleep_decision_tree_model.pkl
+  Saved: saved_models/sleep_random_forest_model.pkl
+  Saved: saved_models/sleep_svm_model.pkl
+  Saved: saved_models/sleep_k-nearest_neighbors_model.pkl
+  Saved: saved_models/sleep_logistic_regression_model.pkl
+  Saved: model metadata and preprocessing objects
+
+Analysis complete! Check generated files and visualizations.
+Files created:
+📊 Overview Images:
+- images/01_model_performance_overview.png
+- images/02_detailed_analysis_overview.png
+- images/03_clustering_analysis_overview.png
+- images/04_feature_analysis_overview.png
+
+📈 Individual Performance Charts:
+- images/05_model_performance_comparison.png
+- images/06_cross_validation_scores.png
+- images/07_confusion_matrix_best_model.png
+- images/08_model_accuracy_ranking.png
+
+🔍 Detailed Analysis Charts:
+- images/09_feature_correlation_heatmap.png
+- images/10_sleep_quality_by_hour.png
+- images/11_classification_report_heatmap.png
+
+🎯 Clustering Analysis Charts:
+- images/12_silhouette_analysis.png
+- images/13_elbow_method.png
+- images/14_pca_clusters_visualization.png
+- images/15_cluster_sleep_distribution.png
+
+⭐ Feature Analysis Charts:
+- images/16_top_20_feature_importance.png
+- images/17_feature_categories_distribution.png
+- images/18_cumulative_feature_importance.png
+
+📋 Data Files:
+- classification_model_results.csv
+- clustering_analysis_results.csv
+- saved_models/ directory with all trained models
+
+🎉 Total: 18 individual charts + 4 overview images + data files!
+Perfect for your assignment report! 📚
